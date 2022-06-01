@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<meta name="theme-color" content="#0075BE">
+		<meta name="apple-mobile-web-app-status-bar-style" content="#0075BE">
+		<meta name="msapplication-navbutton-color" content="#0075BE" >
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<meta charset="utf-8">
+		<title>ANDRITZ</title>
+		<style>
+			body { margin: 0; }
+
+			.loader {
+			    position: fixed;
+			    color: black;
+			    text-align: center;
+			    z-index: 99;
+			    top: 0;
+			    left: 0;
+			    width: 100%;
+			    height: 100%;
+			    background: white;
+			    display: flex;
+			    justify-content: center;
+			    align-items: center;
+			}
+
+			.loader > img {
+			    width: 600px;
+			    box-sizing: border-box;
+
+			}
+
+			#myProgress {
+			  width: 600px;
+			  position: absolute;
+  				top: 80%;
+			  background-color: lightgray;
+			  margin: auto;
+			  box-sizing: border-box;
+
+			}
+
+			#myBar {
+			  width: 1%;
+			  height: 30px;
+			  background-color:  #0075BE;
+			  text-align: center; /* To center it horizontally (if you want) */
+			  line-height: 30px; /* To center it vertically */
+			  color: white;
+
+			}
+
+
+			.loader.hidden {
+			    animation: fadeOut 3s;
+			    animation-fill-mode: forwards;
+			}
+
+			@keyframes fadeOut {
+			    100% {
+			        opacity: 0;
+			        visibility: hidden;
+			    }
+			}
+
+
+			.navbar {
+				position: fixed;
+				width: 100%;
+			  overflow: hidden;
+			  background-color: #0075BE;
+			  font-family: Arial, Helvetica, sans-serif;
+			}
+
+			.navbar > span {
+				margin-left: 20px;
+				color: white;
+				float: left;
+				text-align: center;
+			    justify-content: center;
+			}
+
+			.navbar > img {
+
+				top: 20px;
+				float: left;
+				text-align: center;
+			    justify-content: center;
+			    height: 45px;
+
+			}
+
+
+			.navbar a {
+			  float: left;
+			  font-size: 16px;
+			  color: white;
+			  text-align: center;
+			  padding: 14px 16px;
+			  text-decoration: none;
+			}
+			.navbar .icon {
+			  display: none;
+			}
+
+/*RESPONSIVE*/
+
+			
+
+		
+
+
+/* The File navigation dropdown */
+
+			.filedropdown {
+			  float: left;
+			  overflow: hidden;
+			}
+
+			.filedropdown .filedropbtn {
+			  font-size: 16px;  
+			  border: none;
+			  outline: none;
+			  color: white;
+			  padding: 14px 16px;
+			  background-color: inherit;
+			  font-family: inherit;
+			  margin: 0;
+			}
+
+			.navbar a:hover, .filedropdown:hover .filedropbtn, .filedropbtn:focus {
+			  background-color: #003A70;
+			}
+
+			.filedropdown-content {
+			  display: none;
+			  position: fixed;
+			  background-color: #f9f9f9;
+			  min-width: 160px;
+			  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			  z-index: 1;
+			  opacity: 90%;
+			}
+
+			.filedropdown-content a {
+			  float: none;
+			  color: black;
+			  padding: 12px 16px;
+			  text-decoration: none;
+			  display: block;
+			  text-align: left;
+			}
+
+			.navbar .filedropdown-content a:hover {
+			  background-color: #ddd;
+			}
+			
+			.filedropdown:hover .filedropdown-content {
+			  display: block;
+			}
+
+
+/* The View navigation dropdown */
+
+			.viewdropdown {
+			  float: left;
+			  overflow: hidden;
+			}
+
+			.viewdropdown .viewdropbtn {
+			  font-size: 16px;  
+			  border: none;
+			  outline: none;
+			  color: white;
+			  padding: 14px 16px;
+			  background-color: inherit;
+			  font-family: inherit;
+			  margin: 0;
+			}
+
+			.navbar a:hover, .viewdropdown:hover .viewdropbtn, .viewdropbtn:focus {
+			  background-color: #003A70;
+			}
+
+			.viewdropdown-content {
+			  display: none;
+			  position: fixed;
+			  background-color: #f9f9f9;
+			  min-width: 160px;
+			  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			  z-index: 1;
+			  opacity: 90%;
+			}
+
+			.viewdropdown-content a {
+			  float: none;
+			  color: black;
+			  padding: 12px 16px;
+			  text-decoration: none;
+			  display: block;
+			  text-align: left;
+ 			}
+
+			.navbar .viewdropdown-content a:hover {
+			  background-color: #ddd;
+			}
+
+			.viewdropdown:hover .viewdropdown-content {
+			  display: block;
+			}
+			
+			
+			
+
+/* The Help navigation dropdown */
+
+			.dropdown {
+			  float: left;
+			  overflow: hidden;
+			}
+
+			.dropdown .dropbtn {
+			  font-size: 16px;  
+			  border: none;
+			  outline: none;
+			  color: white;
+			  padding: 14px 16px;
+			  background-color: inherit;
+			  font-family: inherit;
+			  margin: 0;
+			}
+
+			.navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+			  background-color: #003A70;
+			}
+
+			.dropdown-content {
+			  display: none;
+			  position: fixed;
+			  background-color: #f9f9f9;
+			  min-width: 160px;
+			  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			  z-index: 1;
+  			  opacity: 90%;
+			}
+
+			.dropdown-content a {
+			  float: none;
+			  color: black;
+			  padding: 12px 16px;
+			  text-decoration: none;
+			  display: block;
+			  text-align: left;
+			}
+
+			.navbar .dropdown-content a:hover {
+			  background-color: #ddd;
+			}
+
+			.dropdown:hover .dropdown-content {
+			  display: block;
+			}
+			
+
+
+
+/* The side navigation menu */
+			.sidenav {
+			  height: 100%; /* 100% Full-height */
+			  width: 0; /* 0 width - change this with JavaScript */
+			  position: fixed; /* Stay in place */
+			  z-index: 1; /* Stay on top */
+			  top: 46px; /* Place content 46px from the topp */
+			  left: 0;
+			  background-color: #111; /* Black*/
+			  overflow-x: hidden; /* Disable horizontal scroll */
+			  padding-top: 60px; /* Place content 60px from the top */
+			  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+			  opacity: 70%;
+
+			}
+
+			/* The navigation menu links */
+			.sidenav a {
+			  padding: 8px 8px 8px 32px;
+			  text-decoration: none;
+			  font-size: 20px;
+			  color: #818181;
+			  float: none; /* none */
+			  display: flex; /* block */
+			  text-align: center;
+			  transition: 0.3s;
+			}
+
+			/* When you mouse over the navigation links, change their color */
+			.navbar .sidenav a:hover {
+			  color: #ffffff;
+			  background-color: transparent;
+			}
+
+			/* Position and style the close button (top right corner) */
+			.sidenav .closebtn {
+			  position: absolute;
+			  top: 0;
+			  right: 15px;
+			  font-size: 36px;
+			  margin-left: 50px;
+			}
+
+			/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+			@media screen and (max-height: 450px) {
+			  .sidenav {padding-top: 15px;}
+			  .sidenav a {font-size: 18px;}
+			}
+
+/* SLIDER */
+			.slidecontainer {
+
+			  width: 90%;
+
+			}
+
+			.slider {
+			  -webkit-appearance: none;
+			  margin-left: 15px;
+			  width: 90%;
+			  height: 5px;
+			  border-radius: 5px;
+			  background: #d3d3d3;
+			  outline: none;
+			  opacity: 0.7;
+			  -webkit-transition: .2s;
+			  transition: opacity .2s;
+			}
+
+			.slider:hover {
+			  opacity: 1;
+			}
+
+			.slider::-webkit-slider-thumb {
+			  -webkit-appearance: none;
+			  appearance: none;
+			  width: 24px;
+			  height: 18px;
+			  border: 0;
+			  background: url("./assets/andritz-ag.png");
+			  cursor: pointer;
+			}
+
+			.slider::-moz-range-thumb {
+			  width: 24px;
+			  height: 18px;
+			  border: 0;
+			  background: url("./assets/andritz-ag.png");
+			  cursor: pointer;
+			}
+
+
+/* The switch - the box around the slider */
+			.switch {
+				margin-left: 15px;
+			  position: relative;
+			  display: flex; /* inline-block */
+			  width: 60px;
+			  height: 24px;
+			}
+
+			/* Hide default HTML checkbox */
+			.switch input {
+			  opacity: 0;
+			  width: 0;
+			  height: 0;
+			}
+
+			/* The switchslider */
+			.switchslider {
+			  position: absolute;
+			  cursor: pointer;
+			  top: 0;
+			  left: 0;
+			  right: 0;
+			  bottom: 0;
+			  background-color: #ccc;
+			  -webkit-transition: .4s;
+			  transition: .4s;
+			}
+
+			.switchslider:before {
+			  position: absolute;
+			  content: "";
+			  height: 16px;
+			  width: 26px;
+			  left: 4px;
+			  bottom: 4px;
+			  background-color: white;
+			  -webkit-transition: .4s;
+			  transition: .4s;
+			}
+
+			input:checked + .switchslider {
+			  background-color: #0075BE;
+			}
+
+			input:focus + .switchslider {
+			  box-shadow: 0 0 1px #2196F3;
+			}
+
+			input:checked + .switchslider:before {
+			  -webkit-transform: translateX(26px);
+			  -ms-transform: translateX(26px);
+			  transform: translateX(26px);
+			}
+
+
+/*the container must be positioned relative:*/
+			.custom-select {
+				margin-left: 15px;
+			  position: relative;
+			  font-family: Arial;
+			}
+
+			.custom-select select {
+			  display: none; /*hide original SELECT element: */
+			}
+
+			.select-selected {
+			  background-color: #0075BE;
+			}
+
+			/* Style the arrow inside the select element: */
+			.select-selected:after {
+			  position: absolute;
+			  content: "";
+			  top: 14px;
+			  right: 10px;
+			  width: 0;
+			  height: 0;
+			  border: 6px solid transparent;
+			  border-color: #fff transparent transparent transparent;
+			}
+
+			/* Point the arrow upwards when the select box is open (active): */
+			.select-selected.select-arrow-active:after {
+			  border-color: transparent transparent #fff transparent;
+			  top: 7px;
+			}
+
+			/* style the items (options), including the selected item: */
+			.select-items div,.select-selected {
+			  color: #ffffff;
+			  padding: 8px 16px;
+			  border: 1px solid transparent;
+			  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+			  cursor: pointer;
+			}
+
+			/* Style items (options): */
+			.select-items {
+			  position: absolute;
+			  background-color: #0075BE;
+			  top: 100%;
+			  left: 0;
+			  right: 0;
+			  z-index: 99;
+			}
+
+			/* Hide the items when the select box is closed: */
+			.select-hide {
+			  display: none;
+			}
+
+			.select-items div:hover, .same-as-selected {
+			  background-color: #003A70;
+			}
+
+/* OVERLAY */
+			#overlay {
+			  position: fixed;
+			  display: none;
+			  width: 100%;
+			  height: 100%;
+			  top: 0;
+			  left: 0;
+			  right: 0;
+			  bottom: 0;
+			  background-color: rgba(0,0,0,0.5);
+			  z-index: 2;
+			  cursor: pointer;
+			}
+
+			#text{
+			  position: absolute;
+			  top: 50%;
+			  left: 50%;
+			  /*font-size: 15px;  */
+			  color: white;
+			  text-align: center;
+			  transform: translate(-50%,-50%);
+			  -ms-transform: translate(-50%,-50%);
+			}
+
+			/*@media screen and (min-width: 601px) {
+			  #text {
+			    font-size: 15px;
+			  }
+			}
+
+			@media screen and (max-width: 600px) {
+			  #text {
+			    font-size: 30px;
+			  }
+			}*/
+								
+
+		</style>
+	</head>
+	<body>
+
+		<div class="navbar" id="myTopnav">
+				<span class="active" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9783;</span>
+				<img class="active" src="./assets/ANDRITZ_site.png" alt="Loading..." />
+						<!-- File Dropdown -->
+
+		  <div class="filedropdown">
+			  <button class="filedropbtn" onclick="myFileFunction()">File
+			    <i class="fa fa-caret-down"></i>
+			  </button>
+				  <div class="filedropdown-content" id="idfileDropdown">
+				    <a href="#1">New Project (TBD)</a>
+				    <a href="#2">Import... (TBD)</a>
+				    <a href="#3">Export... (TBD)</a>
+				  </div>
+		  </div>
+		  			<!-- View Dropdown -->
+
+		  <div class="viewdropdown">
+			  <button class="viewdropbtn" onclick="myViewFunction()">View
+			    <i class="fa fa-caret-down"></i>
+			  </button>
+				  <div class="viewdropdown-content" id="idviewDropdown">
+				    <a id="myFullscreen" href="#1">Fullscreen (F11)</a>
+				    <a href="#2">Inside View (TBD)</a>
+				    <a href="#3">External View (TBD)</a>
+				    <a id="toggleCamera" href="#4">Toggle Camera (C)</a>
+				  </div>
+		  </div>
+		  			<!-- Help Dropdown -->
+
+		  <div class="dropdown">
+			  <button class="dropbtn" onclick="myHelpFunction()">Help
+			    <i class="fa fa-caret-down"></i>
+			  </button>
+				  <div class="dropdown-content" id="myDropdown">
+				    <a onclick="on()" href="#1">About...</a>
+				  </div>
+				  
+		  </div>
+		  			<!-- sidenav -->
+
+
+		  	<div id="mySidenav" class="sidenav">
+			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			  
+			  	<table>
+			  		<tr>
+			  			<td>
+			  				<!-- Rectangular switch 1-->
+							<label class="switch">
+							  <input type="checkbox" id="myCheck" checked> 
+							  <span class="switchslider"></span>
+							</label>
+						</td>
+						<td><a href="#">Rotate</a>
+						</td>
+					</tr>
+					<tr>
+			  			<td>		
+							<!-- Rectangular switch 2-->
+							<label class="switch">
+							  <input type="checkbox" id="myCheck2" checked> 
+							  <span class="switchslider"></span>
+							</label>
+						</td>
+						<td><a href="#">View Grid</a>
+						</td>
+					</tr>
+					<tr>
+			  			<td>
+							<!-- Rectangular switch 3-->
+							<label class="switch">
+							  <input type="checkbox" id="myCheck3" checked> 
+							  <span class="switchslider"></span>
+							</label>
+						</td>
+						<td><a href="#">View Door</a>
+						</td>
+					</tr>
+				</table>
+
+			  <div><a href="#" style="margin-left: 40px">Cabinet Opacity</a></div>
+			  <input type="range" min="1" max="100" value="100" class="slider" id="myRange">
+  				<p style="color:white;text-align: center">Value: <span id="demo"></span></p>
+			  <div><a href="#">HMI (TBD)</a></div>
+			    <div class="custom-select" style="width:200px;">
+				  <select>
+				    <option value="0">Select a size:</option>
+				    <option value="1">7''</option>
+				    <option value="2">10''</option>
+				    <option value="3">18''</option>
+				  </select>
+				</div>
+			  <!-- more fields: <a href="#">...</a>-->
+			</div>
+
+		</div>
+
+<!-- OVERLAY </a>-->
+		<div id="overlay" onclick="off()">
+		  <div id="text"><p style='margin:0cm;line-height:13.0pt;font-family:"Arial",sans-serif;'><strong><span style="font-size: 20px;"><u>Developed by Walter Macena for ANDRITZ GROUP</u></span></strong></p>
+			<p style='margin:0cm;line-height:13.0pt;font-family:"Arial",sans-serif;'><br></p>
+			<p style='margin:0cm;line-height:13.0pt;font-family:"Arial",sans-serif;'><strong><span style="font-size: 20px;">THIS APPLICATION DOES NOT HAVE A COMMERCIAL PURPOSE!</span></strong></p>
+			<p style='margin:0cm;line-height:13.0pt;font-family:"Arial",sans-serif;'><br></p>
+			<p style='margin:0cm;line-height:13.0pt;font-family:"Arial",sans-serif;'><span style="font-size: 20px;">The proposed idea consists in a web-based application where the main purpose is to build and maintain successful customer relationship in the new world.</span></p>
+			<p style='margin:0cm;line-height:13.0pt;font-family:"Arial",sans-serif;'><br></p>
+			<p style='margin:0cm;line-height:13.0pt;font-family:"Arial",sans-serif;'><span style="font-size: 20px;">By using this platform, the Sales/Marketing team, Engineering and even customers will be able to customize a 3D model of ANDRITZ’s products and solutions. The platform has been developed based on WebGL technology.</span></p>
+
+		  </div>
+		</div>
+
+		
+<!-- LOADER </a>-->
+		<div class="loader">
+    	<img src="./assets/ANDRITZ.gif" alt="Loading..." />
+    	
+    		<div id="myProgress">
+  			<div id="myBar">1%</div>
+		</div>
+
+		<script>
+		
+		function openNav() {
+		  document.getElementById("mySidenav").style.width = "283px";
+		}
+
+		function closeNav() {
+		  document.getElementById("mySidenav").style.width = "0";
+		}
+
+
+
+// OVERLAY
+
+				function on() {
+				  document.getElementById("overlay").style.display = "block";
+				}
+
+				function off() {
+				  document.getElementById("overlay").style.display = "none";
+				}
+			
+/* RESPONSIVE
+				
+				 function myRespFunc() {
+				  var x = document.getElementById("myTopnav");
+				  if (x.className === "navbar") {
+				    x.className += " responsive";
+				  } else {
+				    x.className = "navbar";
+				  }
+				}*/
+				
+
+		
+
+
+// COMBOBOX	
+				var x, i, j, l, ll, selElmnt, a, b, c;
+			/* Look for any elements with the class "custom-select": */
+			x = document.getElementsByClassName("custom-select");
+			l = x.length;
+			for (i = 0; i < l; i++) {
+			  selElmnt = x[i].getElementsByTagName("select")[0];
+			  ll = selElmnt.length;
+			  /* For each element, create a new DIV that will act as the selected item: */
+			  a = document.createElement("DIV");
+			  a.setAttribute("class", "select-selected");
+			  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+			  x[i].appendChild(a);
+			  /* For each element, create a new DIV that will contain the option list: */
+			  b = document.createElement("DIV");
+			  b.setAttribute("class", "select-items select-hide");
+			  for (j = 1; j < ll; j++) {
+			    /* For each option in the original select element,
+			    create a new DIV that will act as an option item: */
+			    c = document.createElement("DIV");
+			    c.innerHTML = selElmnt.options[j].innerHTML;
+			    c.addEventListener("click", function(e) {
+			        /* When an item is clicked, update the original select box,
+			        and the selected item: */
+			        var y, i, k, s, h, sl, yl;
+			        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+			        sl = s.length;
+			        h = this.parentNode.previousSibling;
+			        for (i = 0; i < sl; i++) {
+			          if (s.options[i].innerHTML == this.innerHTML) {
+			            s.selectedIndex = i;
+			            h.innerHTML = this.innerHTML;
+			            y = this.parentNode.getElementsByClassName("same-as-selected");
+			            yl = y.length;
+			            for (k = 0; k < yl; k++) {
+			              y[k].removeAttribute("class");
+			            }
+			            this.setAttribute("class", "same-as-selected");
+			            break;
+			          }
+			        }
+			        h.click();
+			    });
+			    b.appendChild(c);
+			  }
+			  x[i].appendChild(b);
+			  a.addEventListener("click", function(e) {
+			    /* When the select box is clicked, close any other select boxes,
+			    and open/close the current select box: */
+			    e.stopPropagation();
+			    closeAllSelect(this);
+			    this.nextSibling.classList.toggle("select-hide");
+			    this.classList.toggle("select-arrow-active");
+			  });
+			}
+
+			function closeAllSelect(elmnt) {
+			  /* A function that will close all select boxes in the document,
+			  except the current select box: */
+			  var x, y, i, xl, yl, arrNo = [];
+			  x = document.getElementsByClassName("select-items");
+			  y = document.getElementsByClassName("select-selected");
+			  xl = x.length;
+			  yl = y.length;
+			  for (i = 0; i < yl; i++) {
+			    if (elmnt == y[i]) {
+			      arrNo.push(i)
+			    } else {
+			      y[i].classList.remove("select-arrow-active");
+			    }
+			  }
+			  for (i = 0; i < xl; i++) {
+			    if (arrNo.indexOf(i)) {
+			      x[i].classList.add("select-hide");
+			    }
+			  }
+			}
+
+			/* If the user clicks anywhere outside the select box,
+			then close all select boxes: */
+			document.addEventListener("click", closeAllSelect);
+
+		</script>
+
+		<script type="module">
+    		import * as THREE from "./build/three.module.js";
+    		import { GLTFLoader } from './jsm/loaders/GLTFLoader.js';
+			import { GUI } from './jsm/libs/dat.gui.module.js';
+    		import { DDSLoader } from './jsm/loaders/DDSLoader.js';
+			//import { MTLLoader } from './jsm/loaders/MTLLoader.js';
+			//import { OBJLoader } from './jsm/loaders/OBJLoader.js';
+			import { TransformControls } from './jsm/controls/TransformControls.js';
+    		import Stats from './jsm/libs/stats.module.js';
+    		import { OrbitControls } from "./jsm/controls/OrbitControls.js";
+    		//import { groupRotation } from './assets/Sidebar.js';
+
+    		
+    		let container, group, center;
+
+			let cameraPersp, cameraOrtho, currentCamera, orbit;
+			let controls, scene, renderer, control, grid;
+			let scale = 2;
+
+			let bodyMaterial, doorMaterial, cabinetbodyMaterial, handleMaterial, handleMaterial2, doorhandleMat, doorButton1, doorButton2, doorButton3;
+
+			const paramsG = {
+				rotate: true,
+				gridView: true,
+				showDoor: true
+			};
+
+			let mouseX = 0, mouseY = 0;
+
+			let windowHalfX = window.innerWidth / 2;
+			let windowHalfY = window.innerHeight / 2;
+
+//CHECKBOX			
+			var checkBox = document.getElementById("myCheck");
+			var checkBox2 = document.getElementById("myCheck2");
+			var checkBox3 = document.getElementById("myCheck3");
+
+						
+			
+//Slider
+
+		var slider = document.getElementById("myRange");
+		var output = document.getElementById("demo");
+		output.innerHTML = slider.value;
+
+		slider.oninput = function() {
+		  output.innerHTML = this.value;
+		}
+
+
+
+			init();
+			animate();
+
+
+
+function dumpObject(obj, lines = [], isLast = true, prefix = '') {
+const localPrefix = isLast ? '└─' : '├─';
+lines.push(`${prefix}${prefix ? localPrefix : ''}${obj.name || '*no-name*'} [${obj.type}]`);
+const newPrefix = prefix + (isLast ? '  ' : '│ ');
+const lastNdx = obj.children.length - 1;
+obj.children.forEach((child, ndx) => {
+const isLast = ndx === lastNdx;
+dumpObject(child, lines, isLast, newPrefix);
+});
+return lines;
+}
+			
+
+			function init() {
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				const aspect = window.innerWidth / window.innerHeight;
+				cameraPersp = new THREE.PerspectiveCamera( 60, aspect, 0.2, 20000 );
+				cameraOrtho = new THREE.OrthographicCamera( - 1000 * aspect, 1000 * aspect, 1000, - 1000, 0.01, 30000 );
+				currentCamera = cameraPersp;
+
+				currentCamera.position.set( 400, 2600, 2000 );
+				
+				//currentCamera.rotation.z = ( Math.PI / 180 ) * 50;
+				//currentCamera.zoom = 1;
+
+
+				// scene
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0xbfd1e5 );
+				scene.fog = new THREE.Fog( 0xbfd1e5, 200, 10000 );
+
+
+
+				const ambientLight = new THREE.AmbientLight( 0xcccccc, 0.8);
+				scene.add( ambientLight );
+
+				const dirLight1 = new THREE.DirectionalLight( 0xffffff );
+				dirLight1.position.set( 1, 1, 1 );
+				scene.add( dirLight1 );
+
+				const dirLight2 = new THREE.DirectionalLight( 0x002288 );
+				dirLight2.position.set( - 1, - 1, - 1 );
+				scene.add( dirLight2 );
+
+				const dirLight3 = new THREE.DirectionalLight( 0xffffff );
+				dirLight3.position.set( - 1, 1, - 1 );
+				scene.add( dirLight3 );
+
+				window.addEventListener( 'resize', onWindowResize );
+
+
+				//control = new TransformControls( currentCamera, renderer.domElement );
+				//control.addEventListener( 'change', render );
+
+				//control.addEventListener( 'dragging-changed', function ( event ) {
+
+					//orbit.enabled = ! event.value;
+
+					//} );
+
+				// ground
+				group = new THREE.Group();
+				scene.add( group );
+
+				const mesh = new THREE.Mesh( new THREE.PlaneGeometry( 20000, 20000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+				mesh.rotation.x = - Math.PI / 2;
+				mesh.receiveShadow = true;
+				//scene.add( mesh );
+				group.add( mesh );
+
+				grid = new THREE.GridHelper( 20000, 100, 0x000000, 0x000000 );
+				grid.material.opacity = 0.2;
+				grid.material.transparent = true;
+				
+				
+				group.add( grid );
+
+			
+				// load model
+
+				
+				const onProgress = function ( xhr ) {
+
+					if ( xhr.lengthComputable ) {
+
+						const percentComplete = xhr.loaded / xhr.total * 100;
+						console.log( Math.round( percentComplete, 2 ) + ' % downloaded' );
+						var elem = document.getElementById("myBar");
+						elem.style.width = percentComplete + "%";
+						elem.innerHTML = Math.round( percentComplete, 2 ) + "%";
+						
+					} 
+				
+				};
+
+				const onError = function () { };
+
+				const manager = new THREE.LoadingManager();
+				//manager.addHandler( /\.dds$/i, new DDSLoader() );
+
+				manager.onLoad = function ( ) {
+
+					console.log( 'Loading complete!');
+					//window.addEventListener("load", function () {
+			    	const loader = document.querySelector(".loader");
+			    	loader.className += " hidden"; // class "loader hidden"
+					//});
+	
+				};
+
+				// materials
+								
+				bodyMaterial = new THREE.MeshStandardMaterial( {
+					color: 0xbababa, metalness: 0.5, roughness: 0.5, visible: false
+					//clearcoat: 0.05, clearcoatRoughness: 0.05,
+				} );
+				cabinetbodyMaterial = new THREE.MeshStandardMaterial( {
+					color: 0xbababa, metalness: 0.5, roughness: 0.5, transparent: true//, opacity: 0.5
+					//clearcoat: 0.05, clearcoatRoughness: 0.05,
+				} );
+				doorMaterial = new THREE.MeshStandardMaterial( {
+					color: 0xbababa, metalness: 0.5, roughness: 0.5, transparent: true//, opacity: 0.5
+				} );
+				handleMaterial = new THREE.MeshStandardMaterial( {
+					color: 0xc4da1b, metalness: 0.5, roughness: 0.5, visible: false
+				} );
+				handleMaterial2 = new THREE.MeshStandardMaterial( {
+					color: 0xff0000, metalness: 0.5, roughness: 0.5, visible: false
+				} );
+				doorhandleMat = new THREE.MeshStandardMaterial( {
+					color: 0x171717, metalness: 0.5, roughness: 0.5, visible: false
+				} );
+				doorButton1 = new THREE.MeshStandardMaterial( {
+					color: 0x23b710, metalness: 0.5, roughness: 0.5
+				} );
+				doorButton2 = new THREE.MeshStandardMaterial( {
+					color: 0x150b8a, metalness: 0.5, roughness: 0.5
+				} );
+				doorButton3 = new THREE.MeshStandardMaterial( {
+					color: 0xff0000, metalness: 0.5, roughness: 0.5
+				} );
+
+				//if ( paramsG.showDoor ) {
+				//	bodyMaterial.visible = paramsG.showDoor;
+				//} else{
+				//	bodyMaterial.visible = false;
+				//}
+				// comment in the following line and import TGALoader if your asset uses TGA textures
+				// manager.addHandler( /\.tga$/i, new TGALoader() );
+
+				//control.attach( mesh );
+				//scene.add( control );
+
+
+				const loader = new GLTFLoader( manager ).setPath( './assets/' );
+				loader.load( 'cabinet.glb', function ( gltf ) {
+
+const root = gltf.scene;
+//scene.add(root);
+console.log(dumpObject(root).join('\n'));
+
+					gltf.scene.position.y = 95;
+					//gltf.scene.position.x = 400;
+					gltf.scene.rotation.x = Math.PI/180 * - 90;
+
+						gltf.scene.traverse( function ( child ) {
+
+						if ( child.isMesh ) {
+
+							// glTF currently supports only tangent-space normal maps.
+							// this model has been modified to demonstrate the use of an object-space normal map.
+
+							child.material.normalMapType = THREE.ObjectSpaceNormalMap;
+							child.castShadow = true;
+            				child.receiveShadow = true;
+
+							//child.material.envMap = envMap;
+
+							// attribute normals are not required with an object-space normal map. remove them.
+
+							//child.geometry.deleteAttribute( 'normal' );
+							//child.scale.multiplyScalar( 2 );
+							var examStateArr = ["Solid1505", "Solid1506", "Solid1508", "Solid1509", "Solid1511", "Solid1512", "Solid39", "Solid217", "Solid1510", "Solid1503"];
+							
+							var cabinetBody = ['Solid171', 'Solid1124', 'Solid170', 'Solid1137'];
+
+								//for (var i = 0; i < examStateArr.length; i++) {
+								//    root.getObjectByName(examStateArr[i]).visible = false;   
+								//}
+								//if (paramsG.showDoor) {
+
+									for (var i = 0; i < examStateArr.length; i++) {
+										//bodyMaterial = root.getObjectByName(examStateArr[i]).material.color;
+									    root.getObjectByName(examStateArr[i]).material = bodyMaterial;
+									    //root.getObjectByName(examStateArr[i]).material.transparent = true;
+	   								    //root.getObjectByName(examStateArr[i]).material.opacity = 0.5;   
+									} 
+
+									for (var i = 0; i < cabinetBody.length; i++) {
+										//bodyMaterial = root.getObjectByName(examStateArr[i]).material.color;
+									    root.getObjectByName(cabinetBody[i]).material = cabinetbodyMaterial;
+									    //root.getObjectByName(examStateArr[i]).material.transparent = true;
+	   								    //root.getObjectByName(examStateArr[i]).material.opacity = 0.5;   
+									} 
+
+								root.getObjectByName("Solid217").material = handleMaterial;
+								root.getObjectByName("Solid39").material = handleMaterial2;
+								root.getObjectByName("Solid1502").material = doorhandleMat;
+								root.getObjectByName("Solid1501").material = doorMaterial;
+								root.getObjectByName("Solid1504").material = doorButton1;
+								root.getObjectByName("Solid1507").material = doorButton2;
+								root.getObjectByName("Solid1510").material = doorButton3;
+								 
+
+								//}
+							
+							child.material.side = THREE.DoubleSide;
+							const cabinet = new THREE.Box3().setFromObject( child ).getCenter( new THREE.Vector3() ).multiplyScalar( scale );
+							//scene.add( child );
+
+						}
+						
+
+
+					} );
+
+					//new THREE.Box3().setFromObject( child ).getCenter( child.position ).multiplyScalar( - 1 );
+					//scene.add( gltf.scene );
+					const box = new THREE.Box3().setFromObject( gltf.scene );
+					center = box.getCenter( new THREE.Vector3() );
+					//const bottom = box.getSize ( new THREE.Vector3() );
+					//const elevate = bottom / 2;
+					gltf.scene.position.x += ( gltf.scene.position.x - center.x );
+					//gltf.scene.position.y += ( gltf.scene.position.y - center.y );
+					gltf.scene.position.z += ( gltf.scene.position.z - center.z );
+
+					group.add( gltf.scene );
+
+					//render();
+
+				}, onProgress, onError );
+
+
+
+					window.addEventListener( 'keydown', function ( event ) {
+
+					switch ( event.keyCode ) {
+
+						case 86: // V
+							const randomZoom = Math.random() + 0.1;
+
+							currentCamera.zoom = paramsL.minScale;
+							
+							onWindowResize();
+							break;
+
+
+						case 67: // C
+							const position = currentCamera.position.clone();
+
+							currentCamera = currentCamera.isPerspectiveCamera ? cameraOrtho : cameraPersp;
+							currentCamera.position.copy( position );
+
+							controls.object = currentCamera;
+							control.camera = currentCamera;
+
+							currentCamera.lookAt( controls.target.x, controls.target.y, controls.target.z );
+							onWindowResize();
+							break;
+
+						}
+
+					} );
+
+					var toggleCam = document.getElementById("toggleCamera");
+					toggleCam.onclick = function() { 
+
+							const position = currentCamera.position.clone();
+
+							currentCamera = currentCamera.isPerspectiveCamera ? cameraOrtho : cameraPersp;
+							currentCamera.position.copy( position );
+
+							controls.object = currentCamera;
+							control.camera = currentCamera;
+
+							currentCamera.lookAt( controls.target.x, controls.target.y, controls.target.z );
+							onWindowResize();
+							
+					}
+
+
+					/* View in fullscreen */
+					var fullScreen = document.getElementById("myFullscreen");
+					fullScreen.onclick = function ( event ) {
+					  if (fullScreen.requestFullscreen) {
+					    document.documentElement.requestFullscreen().catch((e) => {
+				         console.log(e);
+				      	});
+					  } else if (fullScreen.webkitRequestFullscreen) { /* Safari */
+					    document.documentElement.webkitRequestFullscreen();
+					  } else if (fullScreen.msRequestFullscreen) { /* IE11 */
+					    document.documentElement.msRequestFullscreen();
+					  }
+					}			    
+					/*
+					function process( gltf ) {	
+					
+
+					
+					const box = new THREE.Box3( ).setFromObject( gltf.scene );		 
+					const boxHelper = new THREE.Box3Helper( box, 0xffff00 );
+				        scene.add( boxHelper );
+					
+					const c = box.getCenter( new THREE.Vector3( ) );
+					const size = box.getSize( new THREE.Vector3( ) );
+					
+					gltf.scene.rotation.set( 0, yRotation, 0 );
+					
+					// rotate center
+					const cz = c.z * Math.cos( yRotation ) - c.x * Math.sin( yRotation );
+					const cx = c.z * Math.sin( yRotation ) + c.x * Math.cos( yRotation );
+					
+					gltf.scene.position.set( xPosition - cx, size.y / 2 - c.y, zPosition - cz );
+					
+					scene.add( gltf.scene ); 
+
+					}
+					*/
+
+
+					//
+
+				renderer = new THREE.WebGLRenderer();
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.shadowMap.enabled = true;
+				container.appendChild( renderer.domElement );
+
+				//orbit = new OrbitControls( currentCamera, renderer.domElement );
+				//orbit.update();
+				//orbit.addEventListener( 'change', render );
+
+
+				controls = new OrbitControls( currentCamera, renderer.domElement );
+				controls.maxDistance = 5000;
+
+				if ( checkBox.checked ) {
+				controls.target.set( 400, 0, 0 );
+				controls.minDistance = 600;
+				} else {
+				controls.minDistance = 0;
+				}
+
+				controls.mouseButtons = {
+					LEFT: THREE.MOUSE.ROTATE,
+					MIDDLE: THREE.MOUSE.PAN,
+					RIGHT: THREE.MOUSE.PAN
+				}
+				
+				
+
+				control = new TransformControls( currentCamera, renderer.domElement );
+				control.addEventListener( 'change', render );
+
+				control.addEventListener( 'dragging-changed', function ( event ) {
+
+					controls.enabled = ! event.value;
+
+				} );
+
+
+			};
+
+			
+			function buildGui() {
+
+				const gui = new GUI();
+
+				const paramsL = {
+				minScale: currentCamera.zoom,
+				maxScale: scale,
+				
+				clear: function () {
+
+				//	removeDecals();
+
+				}
+			};
+
+				gui.add( paramsL, 'minScale', 1, 10 ).onChange( function ( val ) {
+
+					currentCamera.zoom = val;
+					render();
+					onWindowResize();
+
+				} );
+				gui.add( paramsL, 'maxScale', 0, 3 ).onChange( function ( val ) {
+
+					scale = val;
+					render();
+					onWindowResize();
+
+				} );
+				gui.add( paramsG, 'rotate' );
+				gui.add( paramsL, 'clear' );
+				gui.add( paramsG, 'gridView' );
+				gui.add( paramsG, 'showDoor' );
+				gui.open();
+
+				//onWindowResize();
+				//animate();
+
+
+			}
+
+			
+
+			function onWindowResize() {
+
+				const aspect = window.innerWidth / window.innerHeight;
+
+				cameraPersp.aspect = aspect;
+				cameraPersp.updateProjectionMatrix();
+
+				cameraOrtho.left = cameraOrtho.bottom * aspect;
+				cameraOrtho.right = cameraOrtho.top * aspect;
+				cameraOrtho.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				render();
+
+			}
+
+			
+
+
+			function animate() {
+
+				grid.visible = checkBox2.checked;
+
+				bodyMaterial.visible = checkBox3.checked;
+				doorMaterial.visible = checkBox3.checked;
+				handleMaterial2.visible = checkBox3.checked;
+				handleMaterial.visible = checkBox3.checked;
+				doorhandleMat.visible = checkBox3.checked;
+				doorButton1.visible = checkBox3.checked;
+				doorButton2.visible = checkBox3.checked;
+				doorButton3.visible = checkBox3.checked;
+
+
+				cabinetbodyMaterial.opacity = (slider.value / 100);
+				doorMaterial.opacity = (slider.value / 100);
+
+				
+				if ( checkBox.checked == true ){
+				group.rotation.y += 0.005;
+				}
+				//controls.update();
+				requestAnimationFrame( animate );
+				render();
+
+			}
+
+			function render() {
+
+				//const r = Date.now() * 0.0005;
+				//currentCamera.rotation.y = Math.cos( 2 * r );	
+				//currentCamera.position.x += ( mouseX - currentCamera.position.x ) * .05;
+				//currentCamera.position.y += ( - mouseY - currentCamera.position.y ) * .05;
+				if ( checkBox.checked ) {
+				currentCamera.lookAt( 0, 1100, 0 );
+				} 
+				//currentCamera.lookAt( scene.position.x );
+				//currentCamera.lookAt( scene.position.y + 1000 );
+				//currentCamera.lookAt( scene.position.z );
+
+				renderer.render( scene, currentCamera );
+
+			}
+
+//buildGui();
+
+
+    	</script>
+	</body>
+</html>
