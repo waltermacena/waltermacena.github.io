@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>ANDRITZ</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+
+		<script type="module">
+    		import * as THREE from "./build/three.module.js";
+    		import { GLTFLoader } from './jsm/loaders/GLTFLoader.js';
+    		//import { FBXLoader } from './jsm/loaders/FBXLoader.js';
+    		import { DDSLoader } from './jsm/loaders/DDSLoader.js';
+			//import { MTLLoader } from './jsm/loaders/MTLLoader.js';
+			//import { OBJLoader } from './jsm/loaders/OBJLoader.js';
+    		//import { RoughnessMipmapper } from './js/RoughnessMipmapper.js';
+    		import Stats from './jsm/libs/stats.module.js';
+    		import { OrbitControls } from "./jsm/controls/OrbitControls.js";
+
+    		
+    		let container;
+
+			let camera, controls, scene, renderer;
+
+			let mouseX = 0, mouseY = 0;
+
+			let windowHalfX = window.innerWidth / 2;
+			let windowHalfY = window.innerHeight / 2;
+
+			let object;
+
+			init();
+			animate();
+
+
+			function init() {
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.2, 20000 );
+				camera.position.set( 380, 2200, 3390 );
+				camera.rotation.x = Math.PI/180 * -15;
+
+
+				// scene
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0xbfd1e5 );
+				scene.fog = new THREE.Fog( 0xbfd1e5, 200, 10000 );
+
+
+
+				const ambientLight = new THREE.AmbientLight( 0xcccccc, 0.8);
+				scene.add( ambientLight );
+
+				const dirLight1 = new THREE.DirectionalLight( 0xffffff );
+				dirLight1.position.set( 1, 1, 1 );
+				scene.add( dirLight1 );
+
+				const dirLight2 = new THREE.DirectionalLight( 0x002288 );
+				dirLight2.position.set( - 1, - 1, - 1 );
+				scene.add( dirLight2 );
+
+				const dirLight3 = new THREE.DirectionalLight( 0xffffff );
+				dirLight3.position.set( - 1, 1, - 1 );
+				scene.add( dirLight3 );
+
+				window.addEventListener( 'resize', onWindowResize );
+
+
+								
+
+			
+				//const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 60 );
+				//hemiLight.color.setHSL( 60, 10, 60 );
+				//hemiLight.groundColor.setHSL( 1, 10, 2 );
+				//hemiLight.position.set( 10, 100, 10 );
+				//scene.add( hemiLight );
+
+				//const hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, 10 );
+				//scene.add( hemiLightHelper );
+				
+				scene.add( camera );
+
+				// manager
+
+				//function loadModel() {
+
+				//	object.traverse( function ( child ) {
+
+				//		if ( child.isMesh ) child.material.map = texture;
+
+				//	} );
+
+				//	object.position.y = - 95;
+				//	scene.add( object );
+
+				//}
+
+				//const manager = new THREE.LoadingManager( loadModel );
+
+				//manager.onProgress = function ( item, loaded, total ) {
+
+				//	console.log( item, loaded, total );
+
+				//};
+
+				// ground
+				const mesh = new THREE.Mesh( new THREE.PlaneGeometry( 20000, 20000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+				mesh.rotation.x = - Math.PI / 2;
+				mesh.receiveShadow = true;
+				scene.add( mesh );
+
+				const grid = new THREE.GridHelper( 20000, 100, 0x000000, 0x000000 );
+				grid.material.opacity = 0.2;
+				grid.material.transparent = true;
+				scene.add( grid );
+			
+
+				// load model
+
+				const onProgress = function ( xhr ) {
+
+					if ( xhr.lengthComputable ) {
+
+						const percentComplete = xhr.loaded / xhr.total * 100;
+						console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
+
+					}
+
+				};
+
+				const onError = function () { };
+
+				const manager = new THREE.LoadingManager();
+				manager.addHandler( /\.dds$/i, new DDSLoader() );
+
+				// comment in the following line and import TGALoader if your asset uses TGA textures
+				// manager.addHandler( /\.tga$/i, new TGALoader() );
+
+
+				const loader = new GLTFLoader().setPath( './assets/' );
+				loader.load( 'cabinet.glb', function ( gltf ) {
+
+					//gltf.scene.position.y = 95;
+					//gltf.scene.position.x = 400;
+					//gltf.scene.rotation.x = Math.PI/180 * - 90;
+
+					gltf.scene.traverse( function ( child ) {
+
+						if ( child.isMesh ) {
+
+							// glTF currently supports only tangent-space normal maps.
+							// this model has been modified to demonstrate the use of an object-space normal map.
+
+							child.material.normalMapType = THREE.ObjectSpaceNormalMap;
+
+							// attribute normals are not required with an object-space normal map. remove them.
+
+							//child.geometry.deleteAttribute( 'normal' );
+							//child.scale.multiplyScalar( 2 );
+							//child.scale.multiplyScalar( 2 );
+            										
+							child.material.side = THREE.DoubleSide;
+							//child.scale.multiplyScalar( 1 );
+
+							// recenter
+
+							new THREE.Box3().setFromObject( child ).getCenter( child.position ).multiplyScalar( 1.3 );
+
+							scene.add( child );
+							
+						}
+						scene.add( gltf.scene );
+						
+
+					} );
+
+					
+
+					//render();
+
+				}, onProgress, onError );
+
+
+
+								    
+					/*
+					function process( gltf ) {	
+					
+
+					const yRotation = 500; 
+					const xPosition = 0;	 
+					const zPosition = 0;
+					const box = new THREE.Box3( ).setFromObject( gltf.scene );		 
+					const boxHelper = new THREE.Box3Helper( box, 0xffff00 );
+				        scene.add( boxHelper );
+					
+					const c = box.getCenter( new THREE.Vector3( ) );
+					const size = box.getSize( new THREE.Vector3( ) );
+					
+					gltf.scene.rotation.set( 0, yRotation, 0 );
+					
+					// rotate center
+					const cz = c.z * Math.cos( yRotation ) - c.x * Math.sin( yRotation );
+					const cx = c.z * Math.sin( yRotation ) + c.x * Math.cos( yRotation );
+					
+					gltf.scene.position.set( xPosition - cx, size.y / 2 - c.y, zPosition - cz );
+					
+					scene.add( gltf.scene ); 
+
+					}
+					*/
+
+
+					//
+
+				renderer = new THREE.WebGLRenderer();
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.shadowMap.enabled = true;
+				container.appendChild( renderer.domElement );
+
+				controls = new OrbitControls( camera, renderer.domElement );
+				controls.target.set( 400, 0, 0 );
+				controls.update();
+
+			}
+
+			function onWindowResize() {
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function onDocumentMouseMove( event ) {
+
+				mouseX = ( event.clientX - windowHalfX ) / 2;
+				mouseY = ( event.clientY - windowHalfY ) / 2;
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+				render();
+
+			}
+
+			function render() {
+
+				
+				//camera.position.x += ( mouseX - camera.position.x ) * .05;
+				//camera.position.y += ( - mouseY - camera.position.y ) * .05;
+
+				//camera.lookAt( scene.position );
+
+				renderer.render( scene, camera );
+
+			}
+
+			
+
+
+				
+
+    	</script>
+	</body>
+</html>
