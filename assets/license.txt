@@ -1,0 +1,11 @@
+Model Information:
+* title:	Steiner Dbal
+* source:	https://sketchfab.com/3d-models/steiner-dbal-5033ea9a09ec446598c8224a3a02760d
+* author:	morepolys (https://sketchfab.com/morepolys)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Steiner Dbal" (https://sketchfab.com/3d-models/steiner-dbal-5033ea9a09ec446598c8224a3a02760d) by morepolys (https://sketchfab.com/morepolys) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
